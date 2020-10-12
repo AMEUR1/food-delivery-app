@@ -1,0 +1,84 @@
+<app-side-bar></app-side-bar>
+<div class="ml-5 pl-4">
+<h1> Welcome To Admin Commmand </h1>
+
+<mat-tab-group>
+        <mat-tab label="New Command">
+                <mat-form-field>
+                                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                </mat-form-field>
+                <table mat-table [dataSource]="allCommand" class="mat-elevation-z8 col-12">
+
+                        <!--- Note that these columns can be defined in any order.
+                              The actual rendered columns are set as a property on the row definition" -->
+                      
+                        <!-- Position Column -->
+                        <ng-container matColumnDef="No">
+                          <th mat-header-cell *matHeaderCellDef> No. </th>
+                          <td mat-cell *matCellDef="let element; let i=index"> {{i+1}} </td>
+                        </ng-container>
+                      
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="Address">
+                          <th mat-header-cell *matHeaderCellDef> Address </th>
+                          <td mat-cell *matCellDef="let element"> {{element.commandAddress}} </td>
+                        </ng-container>
+                      
+                        <!-- Weight Column -->
+                        <ng-container matColumnDef="Phone">
+                          <th mat-header-cell *matHeaderCellDef> Phone </th>
+                          <td mat-cell *matCellDef="let element">+212-{{element.commandPhone}} </td>
+                        </ng-container>
+                      
+                        <!-- Symbol Column -->
+                        <ng-container matColumnDef="Command">
+                          <th mat-header-cell *matHeaderCellDef> Command </th>
+                          <td mat-cell *matCellDef="let element">
+                            
+                            
+                                <mat-accordion>
+                                        <mat-expansion-panel>
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title>
+                                                <button mat-flat-button color="accent">Show/hide Commands</button>
+                                            </mat-panel-title>
+                
+                                        </mat-expansion-panel-header>
+                                            <mat-list *ngFor="let item of element.commandItems">
+                                                <mat-list-item> {{item.foodQte}} units  of <strong> {{" "+ item.foodName}}</strong>   </mat-list-item>
+                                                <mat-divider></mat-divider>
+                                            </mat-list>
+                                        </mat-expansion-panel>
+                                </mat-accordion>
+                
+                
+                          </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="Actions">
+                                <th mat-header-cell *matHeaderCellDef> Actions </th>
+                                <td mat-cell *matCellDef="let element">
+                                        <div class="float-right">
+                                        <button mat-mini-fab color="primary" class="ml-3">
+                                            <mat-icon>done_outline</mat-icon>
+                                        </button>
+                                        <button mat-mini-fab color="warn" class="ml-3">
+                                                <mat-icon>home</mat-icon>
+                                        </button>
+                                </div>
+                                    
+                                </td>
+                        </ng-container>
+                      
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+                <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        </mat-tab>
+        <mat-tab label="Done Command"> Content 2 </mat-tab>
+        <mat-tab label="All Command"> Content 3 </mat-tab>
+</mat-tab-group>
+
+
+
+</div>

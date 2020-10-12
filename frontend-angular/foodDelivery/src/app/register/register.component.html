@@ -1,0 +1,85 @@
+<app-nav-bar></app-nav-bar>
+<div class=" container-fluid row">
+    <div class=" text-center col-12">
+      <h1>Register To get Quik Delivery</h1>
+    </div>
+    <div class= "container-fluid  col-12  ">
+      <div class="alert alert-danger text-center" *ngIf="errorsMsg" >{{errorsMsg}}</div>
+      <form [formGroup]="registerForm" class="row" (ngSubmit)="onSubmit()">
+        <div class="form-group  col-5  ">
+          <label>UserName</label>
+          <input [class.is-invalid]="userName.invalid && 
+          userName.touched " [class.is-valid]="userName.valid && 
+          userName.touched "  type="text" formControlName="userName" class="form-control  " >
+
+          <div *ngIf="userName.invalid && userName.touched ">
+      
+            <small class="text-danger" *ngIf="userName.errors?.minlength">User name atleast 4 caractere </small>
+            <small class="text-danger" *ngIf="userName.errors?.required">User name is required</small>
+            <small class="text-danger" *ngIf="userName.errors?.forbiddenName">{{userName.errors?.forbiddenName.value}} can't take this user Name</small>
+        </div>
+        </div>
+        <div class="form-group col-5  ">
+          <label>Phone</label>
+          <input [class.is-invalid]="phone.invalid && 
+          phone.touched " [class.is-valid]="phone.valid && 
+          phone.touched "  type="text" formControlName="phone" class="form-control  " >
+          <div *ngIf="phone.invalid && phone.touched ">
+      
+            <small class="text-danger" *ngIf="phone.errors?.minlength">phone  atleast 10 number </small>
+            <small class="text-danger" *ngIf="phone.errors?.required">phone is required</small>
+          </div>
+        </div>
+        <div class="form-group col-8  ">
+          <label>Email</label>
+          <input [class.is-invalid]="email.invalid && 
+          email.touched " [class.is-valid]="email.valid && 
+          email.touched "  type="text" formControlName="email" class="form-control  " >
+
+          <div *ngIf="email.invalid && email.touched ">
+      
+            <small class="text-danger" *ngIf="email.errors?.required">email is required</small>
+          </div>
+        </div>
+        <div class="form-group col-5  ">
+          <label>Password</label>
+          <input [class.is-invalid]="password.invalid && 
+          password.touched " [class.is-valid]="password.valid && 
+          password.touched "  type="password" formControlName="password" class="form-control  " >
+          <div *ngIf="password.invalid && password.touched ">
+      
+            <small class="text-danger" *ngIf="password.errors?.required">password is required</small>
+          </div>
+        </div>
+        <div class="form-group col-5 ">
+          <label>Confirm Password</label>
+          <input [class.is-invalid]="confirmPassword.invalid && 
+          confirmPassword.touched || registerForm.errors?.misMatch " [class.is-valid]="confirmPassword.valid && !registerForm.errors?.misMatch &&
+          confirmPassword.touched "  type="password" formControlName="confirmPassword" class="form-control  " >
+
+          <small class="text-danger" *ngIf="registerForm.errors?.misMatch">Password dosn't match </small>
+        </div>
+
+
+        <div formGroupName="address"  class="col-12 row">
+          <h3 class="col-12">Address</h3>
+          <div class="form-group col-4">
+              <label>City</label>
+              <input formControlName="city"  type="text" class="form-control">
+            </div>
+            <div class="form-group col-4 ">
+                <label>Zip</label>
+                <input formControlName="zip" type="text" class="form-control">
+              </div>
+            <div class="form-group col-4">
+                  <label>Country</label>
+                  <input formControlName="country" type="text" class="form-control">
+            </div>
+        </div>
+        <div class="col-12 text-center">
+          <button class="btn btn-info " [disabled]="!registerForm.valid">Register</button>
+        </div>
+       
+      </form>
+    </div>
+</div>

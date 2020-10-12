@@ -1,0 +1,67 @@
+<app-nav-bar></app-nav-bar>
+{{commandChoosen}}
+{{commandChoosenForm.value | json}}
+<div class="card text-center">
+    <div class="card-header">
+      Your Command
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">Special title treatment</h5>
+      <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+
+      <form class="form-inline container row" [formGroup]="commandChoosenForm" (ngSubmit)="onSubmit()">
+        <div class="col-12">
+          <mat-form-field class="example-full-width ml-4 col-4">
+              <input  matInput formControlName="commandAddress"  placeholder="adresse " >
+              <mat-icon matSuffix>home</mat-icon>
+              <mat-hint *ngIf="commandAddress.value">{{commandAddress.value.length}} / 50</mat-hint>
+              <mat-error *ngIf="commandAddress.hasError('required')">
+                  Address is <strong>required</strong>
+              </mat-error>
+              <mat-error *ngIf="commandAddress.hasError('maxlength') && !commandAddress.hasError('required')">
+                Address must be <strong>less then 50 caracteres</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width ml-4 col-4">
+                <input  matInput formControlName="commandPhone"  placeholder="Phone " >
+                <mat-icon matSuffix>phone</mat-icon>
+                <mat-error *ngIf="commandPhone.hasError('required')">
+                  Phone <strong>required</strong>
+                </mat-error>
+                <mat-error *ngIf="commandPhone.hasError('pattern') && !commandPhone.hasError('required')">
+                  Phone must be <strong>a Number</strong>
+                </mat-error>
+                <mat-error *ngIf="(commandPhone.hasError('minlength') || commandPhone.hasError('maxlength') )  && !commandPhone.hasError('pattern')">
+                    Phone must be <strong>between 10-14 Numbers</strong>
+                  </mat-error>
+              </mat-form-field>
+        </div>
+          <div class="row" formArrayName="commandFoodChoosen" *ngFor="let commandE of commandFoodChoosen.controls;let j=index">
+            <div class="col-12" *ngIf="commandE.value">
+
+              <div><strong>{{foodChoseenByName[j].foodName }}: </strong></div>
+                <a class=" btn btn-warning btn-xs" (click)="removeQte(j)"><strong><strong>-</strong></strong></a>
+              <input type="text" class="form-control col-2  text-center" formControlName="{{j}}" readonly >
+              
+                  <a class=" btn btn-success btn-xs" (click)="addQte(j)"><strong>+</strong></a>
+                  <div>
+                  <small>Price :<strong>{{foodChoseenByName[j].foodPrice * foodChoseenByName[j].foodQte }} $</strong></small>
+                </div>
+            </div> 
+             
+          </div>
+          <div class="col-12">
+          <a href="#" class="btn btn-info mt-2" routerLink="/menu" (click)="addMoreCmd()">Add More Command</a>
+          <button type="submit" class="btn btn-danger mt-2 ml-2" [disabled]="!commandChoosenForm.valid">Confirm your Command</button>
+        </div>
+      </form>
+ 
+    </div>
+
+    <div class="card-footer text-muted">
+      2 days ago
+    </div>
+    
+  </div>
+
